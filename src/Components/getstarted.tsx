@@ -1,6 +1,6 @@
 import image from '../assets/images/getstarted.png'
 import image1 from '../assets/images/getstarted2.png'
-const GetStarted = () =>{
+const GetStarted: React.FC = () =>{
     return(
         <>
         <div className='bg-[#CCC6C8]'>
