@@ -2,9 +2,11 @@ import image from '../assets/images/getstarted.png'
 import image1 from '../assets/images/getstarted2.png'
 import BasicModal from './modal';
 import { useState } from 'react';
-
+import SignUpLoginModal from './signup'; 
 const GetStarted: React.FC = () =>{
     const [isOpenModal, setIsOpenModal] = useState(false);
+    const [showAuthModal, setShowAuthModal] = useState(false);
+
     return(
         <>
         <div className='bg-[#CCC6C8]'>
@@ -21,7 +23,10 @@ const GetStarted: React.FC = () =>{
         <p className='mt-[56px] w-[1337px] h-[219px] text-[20px] ml-[58px] mr-[45px]'>
             This project integrates the OpenAI API for real-time conversational AI, offering a seamless and responsive chat experience. It features a Model Explorer UI inspired by Hugging Face Spaces, allowing users to switch models or explore capabilities visually. Task-specific micro-copilots handle functions like summarization or translation, enhancing productivity through focused assistance. Additionally, intelligent “Did you mean?” suggestions help guide users when their input is ambiguous or slightly incorrect.
         </p>
-        <button className='ml-[402px] bg-[#350BF5] w-[294px] h-[70px] rounded-[30px] text-white text-[30px]'>Get Started</button>
+        <button className='ml-[402px] bg-[#350BF5] w-[294px] h-[70px] rounded-[30px] text-white text-[30px]' onClick={() => setShowAuthModal(true)}>Get Started</button>
+         {showAuthModal && (
+        <SignUpLoginModal onClose={() => setShowAuthModal(false)} />
+      )}
         <button className='bg-[#350BF5]  w-[294px] h-[70px] rounded-[30px] ml-[68px] text-white text-[30px]' onClick={()=>{setIsOpenModal(true)}}>Learn More</button>
         {isOpenModal && <BasicModal open={isOpenModal} onClose={()=>setIsOpenModal(false)}/> }
         </div>
