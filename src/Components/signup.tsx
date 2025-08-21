@@ -1,10 +1,12 @@
 import React from 'react';
+import { useState } from 'react';
 
 type Props = {
   onClose: () => void;
 };
 
 const SignUpLoginModal: React.FC<Props> = ({ onClose }) => {
+    const [tab, setTab] = useState<'signup' | 'login' | null>(null);
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white rounded-lg p-8 w-full max-w-md relative shadow-xl">
@@ -19,14 +21,33 @@ const SignUpLoginModal: React.FC<Props> = ({ onClose }) => {
           Welcome to THINKTALK
         </h2>
 
-        <div className="flex flex-col gap-4">
-          <button className="bg-[#350BF5] text-white py-2 rounded-lg text-lg hover:bg-blue-700 transition">
+{!tab && 
+      <div className="flex flex-col gap-4">
+          <button className="bg-[#350BF5] text-white py-2 rounded-lg text-lg hover:bg-blue-700 transition" onClick={()=>setTab('signup')}>
             Sign Up
           </button>
-          <button className="border border-[#350BF5] text-[#350BF5] py-2 rounded-lg text-lg hover:bg-[#350BF5] hover:text-white transition">
+          <button className="border border-[#350BF5] text-[#350BF5] py-2 rounded-lg text-lg hover:bg-[#350BF5] hover:text-white transition" onClick={()=>setTab('login')}>
             Log In
           </button>
         </div>
+}
+      
+
+        {tab === 'signup' &&
+        <form className="flex flex-col gap-4">
+            <input type="text" placeholder="Name" className="border p-2 rounded" />
+            <input type="email" placeholder="Email" className="border p-2 rounded" />
+            <input type="password" placeholder="Password" className="border p-2 rounded" />
+            <button className="bg-[#350BF5] text-white py-2 rounded">Sign Up</button>
+          </form>
+}
+        {tab === 'login' &&
+           <form className="flex flex-col gap-4">
+            <input type="email" placeholder="Email" className="border p-2 rounded" />
+            <input type="password" placeholder="Password" className="border p-2 rounded" />
+            <button className="bg-[#350BF5] text-white py-2 rounded">Log In</button>
+          </form>
+}
       </div>
     </div>
   );
