@@ -1,11 +1,16 @@
 import GetStarted from "./Components/getstarted"
+import ChatInterface from "./Components/ChatInterface"
 
-
+import { Routes, Route } from "react-router-dom"
 function App() {
 
   return (
     <>
-      <GetStarted />
+    <Routes>
+      <Route  path="/" element={<GetStarted />}/> 
+      <Route  path="/chat" element={<ChatInterface />}/> 
+    </Routes>
+     
     </>
   )
 }
