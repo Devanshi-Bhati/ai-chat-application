@@ -6,6 +6,15 @@ import face1 from '../assets/images/face1.png'
 import { useState, useEffect } from 'react'
 const Sidebar: React.FC = () => {
     const [theme, setTheme] = useState('light');
+  const hfModels = [
+  'gpt2',
+  'bigscience/bloom',
+  'tiiuae/falcon-7b',
+  'mistralai/Mistral-7B-Instruct-v0.1',
+  'EleutherAI/gpt-neo-2.7B',
+];
+
+  const [selectedHFModel, setSelectedHFModel] = useState(hfModels[0]);
 
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme');
@@ -43,12 +52,14 @@ const Sidebar: React.FC = () => {
             Explore Models
         </span>
         <div className='flex w-[280px] bg-[#6E6868] text-md  mt-2  rounded border dark:bg-[#D9D9D9]'>
-           <input
-          type="text"
-          placeholder="Search models..."
-          className="bg-[#6E6868] placeholder-black text-black text-md outline-none px-2 rounded dark:bg-[#D9D9D9]"
-          />
-           <button className='w-[30px] h-[30px] text-black ml-5'><img src={search} alt='img' className=' text-black' /></button>
+          <select id="hf-model-select" value={selectedHFModel} onChange={(e) => setSelectedHFModel(e.target.value)}
+        className="w-full px-3 py-2 border rounded bg-white dark:bg-[#252344] dark:text-white">
+        {hfModels.map((model) => (
+          <option key={model} value={model}>
+            {model}
+          </option>
+        ))}
+      </select>
         </div>
        
         <div className=" mt-2 flex ml-12 items-center"><img src={theme ==='dark'? face1 : face} alt='img' className='w-[20px] h-[20px]' /> <span className="text-blue-500 text-lg ml-3">MARY WILSON</span></div>
