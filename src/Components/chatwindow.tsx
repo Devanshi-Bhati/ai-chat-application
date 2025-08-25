@@ -13,7 +13,9 @@ const ChatWindow: React.FC = () => {
   
   const [templates, setTemplates] = useState<string[]>([]);
   const [selectedTemplate, setSelectedTemplate] = useState('');
-
+  const [showParams, setShowParams] = useState(false);
+  const [temperature, setTemperature] = useState(0.7);
+  const [maxTokens, setMaxTokens] = useState(300);
 
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -73,10 +75,10 @@ const textareaRef = useRef<HTMLTextAreaElement | null>(null);
       <div className="p-6 overflow-y-auto flex-grow dark:bg-black">
         {messages.map((msg, idx) => (
           <div key={idx} className="mb-6">
-            <div className="flex items-center max-w-[600px] w-full text-[20px] ml-auto bg-[#D9D9D9] p-2 mb-4 rounded">
+            <div className="flex items-center max-w-[600px] w-full text-md ml-auto bg-[#D9D9D9] p-2 mb-4 rounded">
               {msg.question} <img src={pencil} className='w-[20px] h-[20px] ml-auto cursor-pointer' alt='img' />
             </div>
-            <div className="bg-[#D9D9D9] max-w-[600px] w-full rounded text-[20px]">
+            <div className="bg-[#D9D9D9] max-w-[600px] w-full rounded text-md">
               {msg.answer}
             </div>
           </div>
@@ -96,6 +98,8 @@ const textareaRef = useRef<HTMLTextAreaElement | null>(null);
           className="w-full outline-none rounded px-4 py-2 mr-2 bg-[#D9D9D9]"
         ></textarea>
 
+        <button onClick={handleSendMessage} className="ml-[4px] text-white flex items-center justify-center mr-3"><img src={share} alt='img' className='w-[30px] flex justify-center items-center'/>
+        </button>
 
        {templates.length > 0 && (
          <select value={selectedTemplate} onChange={(e) => {
@@ -103,7 +107,7 @@ const textareaRef = useRef<HTMLTextAreaElement | null>(null);
          setSelectedTemplate(val);
          handleLoadTemplate(val);
         }}
-         className="px-2 py-1 mr-2 rounded bg-[#D9D9D9] dark:bg-[#333] dark:text-white text-sm"
+         className="px-2 py-1 mr-3 rounded bg-[#D9D9D9] dark:bg-[#333] dark:text-white text-sm"
        >
       <option value="">Select template</option>
       {templates.map((template, index) => (
@@ -111,20 +115,34 @@ const textareaRef = useRef<HTMLTextAreaElement | null>(null);
           {template.length > 30 ? template.slice(0, 30) + '...' : template}
         </option>
       ))}
-    </select>
-  )}
+        </select>
+      )}
 
         <button
           onClick={handleSaveTemplate}
           title="Save as Template"
-          className="w-[35px] h-[35px] mr-3 text-lg flex items-center justify-center font-bold"
+          className="w-[35px] h-[35px] mr-3 text-lg  flex items-center justify-center font-bold"
         >
          Save
         </button>
-        <button className='w-[35px] h-[35px] text-[30px] flex items-center justify-center'>+</button>
-        <button onClick={handleSendMessage} className="ml-[4px] text-white flex items-center justify-center"><img src={share} alt='img' className='w-[30px] flex justify-center items-center'/>
-        </button>
+        <button onClick={() => setShowParams(prev => !prev)} className=" text-lg font-bold" title="Toggle parameters">Parameters</button>
       </div>
+
+
+       {showParams && (
+         <div className="bg-[#EDEDED] dark:bg-[#2B2B2B] px-4 py-3 text-sm flex gap-6 items-center border-t">
+           <div className="flex flex-col">
+              <label className="font-medium mb-1">Temperature</label>
+              <input type="range" min="0" max="1" step="0.1" value={temperature} onChange={(e) => setTemperature(parseFloat(e.target.value))} className="w-[150px]" />
+              <span>{temperature}</span>
+           </div>
+
+          <div className="flex flex-col">
+             <label className="font-medium mb-1">Max Tokens</label>
+             <input type="number" min="10" max="4000" value={maxTokens} onChange={(e) => setMaxTokens(parseInt(e.target.value))} className="w-[100px] px-2 py-1 rounded bg-white dark:bg-[#444] border" />
+          </div>
+        </div>
+       )}
     </div>
 
   );
