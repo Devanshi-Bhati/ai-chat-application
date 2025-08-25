@@ -69,9 +69,37 @@ const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   }, 0);
 };
 
+
+const handleCopyJSON = () => {
+  const chatData = JSON.stringify(messages, null, 2);
+  navigator.clipboard.writeText(chatData)
+    .then(() => alert("Chat copied to clipboard as JSON!"))
+    .catch((err) => alert("Failed to copy: " + err));
+};
+
+const handleDownloadJSON = () => {
+  const chatData = JSON.stringify(messages, null, 2);
+  const blob = new Blob([chatData], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'chat-output.json';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
+
+
   return (
     <div className="w-3/4 flex flex-col  bg-white h-full">
         <ThemeToggle />
+
+      <div className="flex justify-end px-6 pt-2 gap-2 dark:bg-black dark:text-white">
+          <button onClick={handleCopyJSON} className='focus:outline-none focus:ring-4 focus:ring-blue-500'> Copy JSON</button>
+          <button onClick={handleDownloadJSON} className='focus:outline-none focus:ring-4 focus:ring-blue-500'> Download JSON</button>
+      </div>
+
       <div className="p-6 overflow-y-auto flex-grow dark:bg-black">
         {messages.map((msg, idx) => (
           <div key={idx} className="mb-6">
@@ -95,10 +123,10 @@ const textareaRef = useRef<HTMLTextAreaElement | null>(null);
           onChange={(e) => setInput(e.target.value)}
           rows={1}
           placeholder="What's on your mind?"
-          className="w-full outline-none rounded px-4 py-2 mr-2 bg-[#D9D9D9]"
+          className="w-full outline-none rounded px-4 py-2 mr-2 bg-[#D9D9D9] focus:outline-none focus:ring-4 focus:ring-blue-500"
         ></textarea>
 
-        <button onClick={handleSendMessage} className="ml-[4px] text-white flex items-center justify-center mr-3"><img src={share} alt='img' className='w-[30px] flex justify-center items-center'/>
+        <button aria-label="Send message" title='Send' onClick={handleSendMessage} className="ml-[4px] text-white flex items-center justify-center mr-3 focus:outline-none focus:ring-4 focus:ring-blue-500"><img src={share} className='w-[30px] flex justify-center items-center'/>
         </button>
 
        {templates.length > 0 && (
@@ -107,7 +135,7 @@ const textareaRef = useRef<HTMLTextAreaElement | null>(null);
          setSelectedTemplate(val);
          handleLoadTemplate(val);
         }}
-         className="px-2 py-1 mr-3 rounded bg-[#D9D9D9] dark:bg-[#333] dark:text-white text-sm"
+         className="px-2 py-1 mr-3 rounded bg-[#D9D9D9] dark:bg-[#333] dark:text-white text-sm focus:outline-none focus:ring-4 focus:ring-blue-500"
        >
       <option value="">Select template</option>
       {templates.map((template, index) => (
@@ -120,12 +148,13 @@ const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
         <button
           onClick={handleSaveTemplate}
+          aria-label="Save template"
           title="Save as Template"
-          className="w-[35px] h-[35px] mr-3 text-lg  flex items-center justify-center font-bold"
+          className="w-[35px] h-[35px] mr-3 text-lg  flex items-center justify-center font-bold focus:outline-none focus:ring-4 focus:ring-blue-500"
         >
          Save
         </button>
-        <button onClick={() => setShowParams(prev => !prev)} className=" text-lg font-bold" title="Toggle parameters">Parameters</button>
+        <button aria-label="Set parameters" onClick={() => setShowParams(prev => !prev)} className=" text-lg font-bold focus:outline-none focus:ring-4 focus:ring-blue-500" title="Toggle parameters">Parameters</button>
       </div>
 
 

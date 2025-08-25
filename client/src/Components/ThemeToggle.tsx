@@ -19,7 +19,7 @@ const ThemeToggle: React.FC = () =>{
 return(
     <div className="flex items-center justify-end gap-2 dark:bg-black"> 
     <img src={isDark?sun2:sun} alt='img' className="w-[35px] h-[35px] text-black dark:text-white" />
-    <button onClick={() => setIsDark(!isDark)} className="w-[35px] h-[20px] rounded-[10px] border-[3px] border-black transition duration-300 flex items-center dark:border-white">
+    <button aria-label="Toggle theme" title='Toggle theme' onClick={() => setIsDark(!isDark)} className="w-[35px] h-[20px] rounded-[10px] border-[3px] border-black transition duration-300 flex items-center dark:border-white focus:outline-none focus:ring-4 focus:ring-blue-500">
     <div
       className={`w-[13px] h-[13px] bg-black dark:bg-white rounded-full transition-transform duration-300 ease-in-out transform ${
       isDark ? 'translate-x-[14px]' : 'translate-x-0'

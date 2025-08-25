@@ -36,7 +36,7 @@ const Sidebar: React.FC = () => {
         <div className="text-lg font-bold mb-6 mt-[23px] text-center  dark:text-white">THINKTALK</div>
         <div className="flex justify-center mb-6"><img src={image} alt='img' className="w-[60px] h-[60px]"/></div>
 
-        <button className="bg-[#A0A0A9] max-w-full w-[300px] px-5 py-2 ml-5 rounded text-lg dark:bg-[#252344] dark:text-white"> New Chat <span className="text-xl ml-7">+</span></button>
+        <button aria-label="Start a new chat" title='Start a new chat' className="bg-[#A0A0A9] max-w-full w-[300px] px-5 py-2 ml-5 rounded text-lg dark:bg-[#252344] dark:text-white focus:outline-none focus:ring-4 focus:ring-blue-500"> New Chat <span className="text-xl ml-7">+</span></button>
 
         <div className="text-lg mt-2 mb-2 font-bold text-center dark:text-white">Previous Chats</div>
         <ul className="mt-2 text-sm">
@@ -52,8 +52,8 @@ const Sidebar: React.FC = () => {
             Explore Models
         </span>
         <div className='flex w-[280px] bg-[#6E6868] text-md  mt-2  rounded border dark:bg-[#D9D9D9]'>
-          <select id="hf-model-select" value={selectedHFModel} onChange={(e) => setSelectedHFModel(e.target.value)}
-        className="w-full px-3 py-2 border rounded bg-white dark:bg-[#252344] dark:text-white">
+          <select aria-label="Select from hugging face models" id="hf-model-select" value={selectedHFModel} onChange={(e) => setSelectedHFModel(e.target.value)}
+        className="w-full px-3 py-2 border rounded bg-white dark:bg-[#252344] dark:text-white focus:outline-none focus:ring-4 focus:ring-blue-500">
         {hfModels.map((model) => (
           <option key={model} value={model}>
             {model}
